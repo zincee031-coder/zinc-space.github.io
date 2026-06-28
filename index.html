@@ -1,0 +1,2239 @@
+<!DOCTYPE 
+  html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Li Hexin · ESG & Supply Chain</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+ :root{
+   --bg:#080c18;
+   --bg2:#0e1322;
+   --card:#161c2e;
+   --accent:#059669;
+   --accent2:#EA580C;
+   --blue:#3B82F6;
+   --text:#e2e8f0;
+   --muted:#7f8a9e;
+   --border:rgba(255,255,255,0.06);
+   --glow:none;
+ }
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* LANG TOGGLE */
+.lang-btn{
+  position:fixed;top:1.5rem;right:1.5rem;z-index:1000;
+  display:flex;gap:2px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:3px;
+  backdrop-filter:blur(12px);
+}
+.lang-btn button{
+  padding:0.3rem 0.9rem;
+  border:none;
+  border-radius:16px;
+  font-size:0.78rem;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+  letter-spacing:0.05em;
+  cursor:pointer;
+  transition:all 0.25s;
+  background:transparent;
+  color:var(--muted);
+}
+.lang-btn button.active{
+  background:var(--accent);
+  color:#222222;
+}
+
+/* CONTACT BTN */
+.contact-btn{
+  position:fixed;top:1.5rem;left:1.5rem;z-index:1000;
+  display:flex;align-items:center;gap:0.5rem;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:0.4rem 1.1rem;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.82rem;
+  font-weight:500;
+  color:var(--text);
+  cursor:pointer;
+  backdrop-filter:blur(12px);
+  transition:all 0.25s;
+  letter-spacing:0.04em;
+}
+.contact-btn:hover{border-color:var(--accent);color:var(--accent);}
+.contact-btn::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+/* HERO */
+.hero{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 8%;
+}
+.parallax-scene{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+}
+
+.layer{
+  position:absolute;inset:0;
+  transition:transform 0.12s ease-out;
+  will-change:transform;
+}
+
+.sky{
+   background:radial-gradient(ellipse 120% 80% at 50% 0%,#0f1b30 0%,#0a0f1e 40%,#080c18 100%);
+}
+.stars-layer{pointer-events:none;}
+
+.city-svg{width:100%;height:100%;}
+
+.aurora{
+  position:absolute;top:0;left:-10%;right:-10%;height:50%;
+  background:linear-gradient(180deg,
+    rgba(0,229,160,0.04) 0%,
+    rgba(210,204,200,0.03) 50%,
+    transparent 100%);
+  filter:blur(40px);
+  animation:aurora 8s ease-in-out infinite alternate;
+}
+@keyframes aurora{
+  from{transform:translateX(-5%) scaleX(1.1);}
+  to{transform:translateX(5%) scaleX(0.95);}
+}
+
+/* Photo Container - floating portrait blending into background */
+#photo-container{
+  position:relative;
+  z-index:5;
+  width:440px;
+  height:580px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1200px;
+  pointer-events:none;
+}
+.photo-wrap{
+  position:relative;
+  width:340px;
+  height:460px;
+  transform-style:preserve-3d;
+  cursor:default;
+  pointer-events:auto;
+}
+.photo-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  -webkit-mask-image:radial-gradient(ellipse 100% 95% at 50% 50%, black 45%, transparent 70%);
+  mask-image:radial-gradient(ellipse 100% 95% at 50% 50%, black 45%, transparent 70%);
+  -webkit-mask-mode:alpha;
+  mask-mode:alpha;
+  transition:transform 0.6s cubic-bezier(0.23,1,0.32,1);
+}
+.photo-img:hover{
+  transform:scale(1.02);
+}
+/* Soft ambient glow behind person */
+#particleCanvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:2;
+}
+.photo-aura{
+  position:absolute;
+  width:380px;
+  height:500px;
+  top:50%;left:50%;
+  transform:translate(-50%,-48%);
+  background:radial-gradient(ellipse 65% 75% at 50% 50%, rgba(0,229,160,0.06) 0%, rgba(37,99,235,0.04) 35%, transparent 60%);
+  filter:blur(35px);
+  pointer-events:none;
+  z-index:-1;
+  animation:pulseGlow 4s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{ opacity:0.7; transform:translate(-50%,-48%) scale(1); }
+  50%{ opacity:1; transform:translate(-50%,-48%) scale(1.05); }
+}
+/* Ground shadow */
+.photo-shadow{
+  position:absolute;
+  bottom:-8px;
+  left:50%;
+  transform:translateX(-50%);
+  width:200px;
+  height:24px;
+   background:radial-gradient(ellipse 50% 100% at 50% 0%, rgba(0,0,0,0.08) 0%, transparent 70%);
+  filter:blur(10px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* Hero content */
+.hero-content{
+  position:relative;z-index:10;
+  text-align:left;
+  padding:2rem;
+  max-width:540px;
+  flex-shrink:0;
+}
+.hero-eyebrow{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.72rem;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp 0.8s 0.2s forwards;
+}
+.hero-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.8rem,6vw,5rem);
+  font-weight:700;
+  letter-spacing:-0.03em;
+  line-height:1;
+  color:#fff;
+  margin-bottom:0.75rem;
+  opacity:0;animation:fadeUp 0.8s 0.4s forwards;
+}
+.hero-name em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-title{
+  font-size:1rem;color:var(--muted);
+  font-weight:400;letter-spacing:0.06em;
+  margin-bottom:3rem;
+  opacity:0;animation:fadeUp 0.8s 0.6s forwards;
+}
+.hero-pills{
+  display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0.5rem;
+  margin-bottom:3rem;
+  opacity:0;animation:fadeUp 0.8s 0.8s forwards;
+}
+.pill{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.75rem;letter-spacing:0.06em;
+  padding:0.35rem 0.9rem;
+  border:1px solid rgba(0,229,160,0.25);
+  border-radius:20px;
+  color:var(--accent);
+  background:rgba(0,229,160,0.05);
+}
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  font-size:0.7rem;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;
+  opacity:0;animation:fadeUp 0.8s 1.2s forwards;
+}
+.scroll-hint::after{
+  content:'';width:1px;height:40px;
+  background:linear-gradient(to bottom,var(--muted),transparent);
+  animation:scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine{0%,100%{opacity:0.4;transform:scaleY(1);}50%{opacity:1;transform:scaleY(0.6);}}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* SECTIONS */
+main{position:relative;z-index:5;}
+
+section{
+  padding:6rem 2rem;
+  max-width:1000px;margin:0 auto;
+}
+.section-label{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:0.75rem;
+}
+h2.section-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1.8rem,3vw,2.5rem);
+  font-weight:700;color:#fff;
+  margin-bottom:3rem;
+  letter-spacing:-0.02em;
+}
+
+.full-divider{
+  height:1px;background:var(--border);
+  margin:0;
+  position:relative;
+}
+.full-divider::after{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:60%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,229,160,0.08),transparent);
+}
+
+/* SKILLS */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+}
+.skill-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:border-color 0.25s,transform 0.25s;
+}
+.skill-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--blue));
+  opacity:0;transition:opacity 0.25s;
+}
+.skill-card:hover{border-color:rgba(0,229,160,0.3);transform:translateY(-3px);}
+.skill-card:hover::before{opacity:1;}
+.skill-card-icon{
+  font-size:1.6rem;margin-bottom:1rem;
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,229,160,0.08);border-radius:10px;
+}
+.skill-card-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.92rem;font-weight:600;color:#fff;margin-bottom:0.75rem;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.75rem;}
+.stag{
+  font-size:0.68rem;padding:0.2rem 0.55rem;
+  border:1px solid rgba(0,229,160,0.2);
+  border-radius:3px;color:rgba(130,124,118,0.8);
+  background:rgba(0,229,160,0.04);
+}
+.stag.blue{
+  border-color:rgba(37,99,235,0.25);
+  color:rgba(100,160,255,0.9);
+  background:rgba(37,99,235,0.06);
+}
+.stag.orange{
+  border-color:rgba(255,107,53,0.25);
+  color:rgba(255,140,100,0.9);
+  background:rgba(255,107,53,0.06);
+}
+
+/* ESG Knowledge Grid */
+.esg-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+}
+.esg-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1.5rem;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;
+}
+.esg-card:hover{
+  border-color:rgba(0,229,160,0.3);
+  transform:translateY(-3px);
+}
+.esg-card .esg-letter{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2.5rem;
+  font-weight:700;
+  line-height:1;
+  margin-bottom:0.5rem;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.esg-card h3{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1rem;
+  font-weight:600;
+  color:#fff;
+  margin-bottom:0.75rem;
+}
+.esg-card p{
+  font-size:0.82rem;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:0.5rem;
+}
+.esg-card ul{
+  list-style:none;
+  padding:0;
+  font-size:0.8rem;
+  color:var(--muted);
+  line-height:2;
+}
+.esg-card ul li::before{
+  content:"▸ ";
+  color:var(--accent);
+}
+
+/* HIGHLIGHTS METRICS */
+.metrics{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  margin-bottom:4rem;
+}
+.metric{
+  background:var(--card);padding:2rem 1.5rem;text-align:center;
+}
+.metric-num{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2.2rem;font-weight:700;color:var(--accent);
+  display:block;letter-spacing:-0.03em;
+}
+.metric-label{font-size:0.78rem;color:var(--muted);letter-spacing:0.05em;margin-top:0.25rem;}
+
+/* ESG Frameworks */
+.framework-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:0.75rem;
+}
+.fw-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1rem 1.2rem;
+  display:flex;
+  cursor:pointer;
+  transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;
+}
+.fw-item:hover{border-color:rgba(0,229,160,0.3);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.fw-item:hover .fw-dot{box-shadow:0 0 10px rgba(0,229,160,0.5);}
+.fw-item a{text-decoration:none;color:inherit;display:flex;align-items:center;gap:0.75rem;width:100%;}
+  align-items:center;
+  gap:0.75rem;
+}
+.fw-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent);flex-shrink:0;
+}
+.fw-text{font-size:0.82rem;color:var(--text);font-weight:500;}
+
+/* EXPERIENCE TIMELINE */
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0.5rem;bottom:0;
+  width:1px;background:var(--border);
+}
+.tl-item{position:relative;margin-bottom:3.5rem;}
+.tl-dot{
+  position:absolute;left:-2.4rem;top:0.5rem;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg);
+  box-shadow:0 0 10px rgba(0,229,160,0.5);
+}
+.tl-period{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:0.4rem;
+}
+.tl-role{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:0.2rem;}
+.tl-company{font-size:0.85rem;color:var(--muted);margin-bottom:1rem;}
+.tl-projects{display:flex;flex-direction:column;gap:0.75rem;}
+.tl-project{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:1rem 1.25rem;
+}
+.tl-project-title{
+  font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;
+  color:rgba(0,229,160,0.9);margin-bottom:0.5rem;
+}
+.tl-project-desc{font-size:0.82rem;color:var(--muted);line-height:1.75;}
+.tl-highlight{color:var(--accent2);font-weight:500;}
+
+/* CERTS */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;}
+.cert-item{
+  display:flex;align-items:center;gap:0.75rem;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:0.9rem 1.1rem;
+}
+.cert-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.cert-text{font-size:0.82rem;color:var(--text);font-weight:500;}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 2rem;text-align:center;
+  font-size:0.75rem;color:var(--muted);letter-spacing:0.08em;
+}
+
+/* ========================
+   ID CARD OVERLAY (FIXED LANYARD)
+   ======================== */
+.overlay{
+  position:fixed;inset:0;z-index:2000;
+  display:none;
+  align-items:center;justify-content:center;
+  pointer-events:none;
+}
+.overlay.active{display:flex;pointer-events:all;}
+
+.overlay-bg{
+  position:absolute;inset:0;
+  background:rgba(5,8,16,0.7);
+  backdrop-filter:blur(8px);
+}
+
+/* ID CARD */
+.id-card-wrap{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  user-select:none;
+  cursor:grab;
+}
+.id-card-wrap:active{cursor:grabbing;}
+
+/* Lanyard - FIXED: connected clip at top, strap goes through card hole */
+.lanyard-container{
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* Top clip ring - visually connects the lanyard to a shirt collar */
+.lanyard-top-ring{
+  width:18px;height:18px;
+  border:2px solid #A09894;
+  border-radius:50%;
+  margin-bottom:2px;
+  position:relative;
+  background:transparent;
+  box-shadow:inset 0 0 4px rgba(0,0,0,0.5);
+}
+.lanyard-top-ring::after{
+  content:'';
+  position:absolute;
+  top:-8px;left:50%;
+  transform:translateX(-50%);
+  width:2px;height:8px;
+  background:#444;
+  border-radius:1px;
+}
+
+.lanyard-strap{
+  width:8px;
+  height:70px;
+  background:repeating-linear-gradient(
+    180deg,
+    #333 0px,#333 3px,
+    #222 3px,#222 5px
+  );
+  border-radius:2px 2px 0 0;
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;
+  padding-top:2px;
+  gap:0;
+  overflow:hidden;
+  transform:rotate(1.5deg);
+}
+.lanyard-text{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:3px;
+  font-weight:700;
+  color:rgba(255,255,255,0.35);
+  letter-spacing:0.01em;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  white-space:nowrap;
+  line-height:6px;
+  position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;gap:3px;
+  height:100%;
+  justify-content:flex-start;
+}
+
+/* Connection ring between strap and card hole */
+.lanyard-connector-ring{
+  width:16px;height:16px;
+  border:1.5px solid #666;
+  border-radius:50%;
+  margin-top:-1px;
+  margin-bottom:0px;
+  background:transparent;
+  position:relative;z-index:2;
+}
+
+/* Card body */
+.id-card-body{
+  width:240px;
+  background:#0f0f0f;
+  border-radius:14px;
+  padding:1.5rem 1.25rem 1.75rem;
+  position:relative;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 40px 80px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  margin-top:-12px; /* overlap with connector ring */
+}
+/* Top hole - now visually connected via the ring */
+.id-card-hole{
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  width:18px;height:18px;border-radius:50%;
+  background:#050810;
+  border:2px solid #2a2a2a;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,0.8);
+  z-index:0;
+}
+
+/* Card surface texture */
+.id-card-body::before{
+  content:'';position:absolute;inset:0;border-radius:14px;
+  background:repeating-linear-gradient(
+    45deg,transparent,transparent 2px,rgba(255,255,255,0.005) 2px,rgba(255,255,255,0.005) 4px
+  );
+  pointer-events:none;
+}
+
+.card-logo-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.25rem;
+}
+.card-logo-text{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;
+  color:rgba(0,0,0,0.3);
+}
+.card-status-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 6px rgba(0,229,160,0.7);
+  animation:blink 2s infinite;
+}
+.card-chip{
+  width:30px;height:22px;
+  background:linear-gradient(135deg,#c8a84b,#a07828,#c8a84b);
+  border-radius:4px;
+  margin:0 auto 1rem;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.card-chip::before{
+  content:'';position:absolute;inset:3px;
+  border:1px solid rgba(0,0,0,0.3);
+  border-radius:2px;
+}
+
+.card-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.35rem;font-weight:700;
+  color:#fff;text-align:center;
+  letter-spacing:-0.01em;margin-bottom:0.25rem;
+}
+.card-role{
+  font-size:0.72rem;color:rgba(0,229,160,0.8);
+  text-align:center;letter-spacing:0.08em;
+  margin-bottom:1rem;font-family:'Space Grotesk',sans-serif;
+}
+.card-badge{
+  display:inline-flex;align-items:center;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:4px;
+  padding:0.25rem 0.75rem;
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(255,255,255,0.5);
+  width:100%;justify-content:center;
+  margin-bottom:1.25rem;
+}
+.card-divider{height:1px;background:rgba(255,255,255,0.06);margin-bottom:1rem;}
+.card-fields{display:flex;flex-direction:column;gap:0.5rem;}
+.card-field{display:flex;justify-content:space-between;align-items:baseline;}
+.cf-label{font-size:0.63rem;color:rgba(255,255,255,0.3);letter-spacing:0.08em;}
+.cf-val{font-size:0.73rem;color:rgba(255,255,255,0.75);font-family:'Space Grotesk',sans-serif;font-weight:500;}
+.card-url{
+  text-align:center;margin-top:1rem;
+  font-size:0.6rem;color:rgba(255,255,255,0.2);letter-spacing:0.06em;
+}
+.close-overlay{
+  position:fixed;top:1.5rem;right:1.5rem;z-index:2001;
+  background:rgba(255,255,255,0.06);border:1px solid var(--border);
+  border-radius:50%;width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;color:var(--muted);
+  transition:all 0.25s;
+  display:none;
+  backdrop-filter:blur(8px);
+}
+.close-overlay:hover{color:#fff;border-color:rgba(0,229,160,0.5);background:rgba(0,229,160,0.15);}
+.close-overlay::after{content:attr(data-label);position:absolute;top:calc(100% + 6px);right:0;font-size:0.6rem;color:var(--muted);white-space:nowrap;letter-spacing:0.05em;opacity:0.8;}
+
+/* LANG content switching */
+[data-zh]{display:block;}
+[data-en]{display:none;}
+body.en [data-zh]{display:none;}
+body.en [data-en]{display:block;}
+span[data-zh]{display:inline;}
+span[data-en]{display:none;}
+body.en span[data-zh]{display:none;}
+body.en span[data-en]{display:inline;}
+
+/* SCROLL NAVIGATION */
+.scroll-nav{
+  position:fixed;
+  right:2rem;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.75rem;
+}
+.scroll-dot{
+  position:relative;
+  width:12px;height:12px;
+  border-radius:50%;
+   background:rgba(255,255,255,0.06);
+   border:1px solid rgba(255,255,255,0.03);
+  cursor:pointer;
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.scroll-dot.active{
+  background:var(--accent);
+  border-color:var(--accent);
+  box-shadow:0 0 12px rgba(0,229,160,0.3);
+  transform:scale(1.3);
+}
+.scroll-dot span{
+  display:block;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:transparent;
+  transition:all 0.3s;
+}
+.scroll-dot:hover{background:rgba(0,229,160,0.3);}
+/* Tooltip label */
+.scroll-dot::after{
+  content:attr(data-label);
+  position:absolute;
+  right:calc(100% + 12px);
+  top:50%;
+  transform:translateY(-50%);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.65rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text);
+  background:rgba(255,255,255,0.95);
+  padding:0.3rem 0.7rem;
+  border-radius:4px;
+  border:1px solid var(--border);
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s,transform 0.25s;
+  transform:translateY(-50%) translateX(4px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+.scroll-dot:hover::after{
+  opacity:1;
+  transform:translateY(-50%) translateX(0);
+}
+
+/* SECTION REVEAL ANIMATIONS */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+/* RESPONSIVE */
+@media(max-width:768px){
+  .scroll-nav{right:0.8rem;gap:0.5rem;}
+  .scroll-dot{width:10px;height:10px;}
+  .scroll-dot::after{display:none;}
+}
+
+/* FLOWING MENU */
+.hero-intro{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.65rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:2rem;
+  opacity:0;
+  animation:fadeUp 0.8s 0.2s forwards;
+}
+.flowing-menu{
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+  opacity:0;
+  animation:fadeUp 0.8s 0.4s forwards;
+}
+.menu-item{
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  padding:0.6rem 0;
+  transition:padding 0.3s;
+}
+.menu-item:hover{padding:0.7rem 0;}
+.menu-item:last-child{border-bottom:none;}
+.menu-text{
+  position:relative;
+  z-index:2;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1rem,2.2vw,1.5rem);
+  font-weight:500;
+  color:var(--muted);
+  letter-spacing:-0.01em;
+  transition:color 0.35s, transform 0.35s;
+  display:block;
+}
+.menu-item:hover .menu-text{
+  color:#0f172a;
+  transform:translateX(10px);
+}
+.menu-hover{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1rem,2.2vw,1.5rem);
+  font-weight:500;
+  color:transparent;
+  transform:translateY(-101%);
+  transition:transform 0.45s cubic-bezier(0.23,1,0.32,1);
+  background:linear-gradient(90deg, rgba(0,229,160,0.08) 0%, transparent 60%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  pointer-events:none;
+}
+.menu-item:hover .menu-hover{
+  transform:translateY(0);
+}
+
+
+/* TOOLKIT ACCORDION */
+.tk-row{
+  display:flex;
+  gap:2.5rem;
+  align-items:flex-start;
+}
+.tk-col-radar{flex:1;min-width:0;}
+.tk-col-menu{flex:1;min-width:280px;}
+.tk-item{
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.tk-item-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.65rem 0;
+  cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.8rem;
+  font-weight:500;
+  color:var(--muted);
+  letter-spacing:0.02em;
+  transition:color 0.25s;
+  user-select:none;
+}
+.tk-item-header:hover{color:#fff;}
+.tk-item-header.active{color:var(--accent);}
+.tk-arrow{
+  font-size:0.6rem;
+  transition:transform 0.3s;
+  color:var(--muted);
+}
+.tk-item-header.active .tk-arrow{
+  transform:rotate(180deg);
+  color:var(--accent);
+}
+.tk-item-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease, padding 0.4s ease;
+  padding:0 0.25rem;
+}
+.tk-item-body.open{
+  max-height:800px;
+  padding:0 0.25rem 1rem;
+}
+.tk-section-label{
+  font-size:0.68rem;
+  color:var(--accent);
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+  letter-spacing:0.06em;
+  margin-top:0.7rem;
+  margin-bottom:0.3rem;
+}
+.tk-text{
+  font-size:0.72rem;
+  color:var(--muted);
+  line-height:1.7;
+}
+.tk-rasic{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:0.15rem 0.6rem;
+  margin:0.3rem 0;
+}
+.tk-rasic-letter{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.65rem;
+  font-weight:700;
+  color:var(--accent);
+}
+.tk-rasic-text{
+  font-size:0.7rem;
+  color:var(--muted);
+  line-height:1.6;
+}
+.tk-steps{
+  list-style:none;
+  padding:0;
+  margin:0.3rem 0;
+}
+.tk-steps li{
+  font-size:0.7rem;
+  color:var(--muted);
+  line-height:1.7;
+  padding-left:0.9rem;
+  position:relative;
+}
+.tk-steps li::before{
+  content:"\2192";
+  position:absolute;left:0;
+  color:var(--accent);
+}
+.tk-kpis{
+  display:flex;flex-wrap:wrap;gap:0.3rem;
+  margin:0.3rem 0;
+}
+.tk-kpi-tag{
+  font-size:0.62rem;
+  padding:0.15rem 0.5rem;
+  border:1px solid rgba(0,229,160,0.2);
+  border-radius:3px;
+  color:rgba(130,124,118,0.8);
+  background:rgba(0,229,160,0.04);
+}
+.tk-download-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0.4rem;
+  margin:0.5rem 0;
+}
+.tk-dl-btn{
+  display:flex;align-items:center;gap:0.4rem;
+  padding:0.4rem 0.6rem;
+  border:1px solid rgba(0,229,160,0.15);
+  border-radius:6px;
+  font-size:0.68rem;
+  color:var(--muted);
+  text-decoration:none;
+  transition:all 0.2s;
+  cursor:pointer;
+}
+.tk-dl-btn:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:rgba(0,229,160,0.05);
+}
+
+</style>
+</head>
+<body>
+
+<!-- Lang toggle -->
+<div class="lang-btn">
+  <button class="active" onclick="setLang('zh')">中文</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- Contact button -->
+<button class="contact-btn" onclick="openCard()">
+  <span data-zh>打开工牌</span>
+  <span data-en>ID Card</span>
+</button>
+
+<!-- Close button -->
+<div class="close-overlay" id="closeBtn" onclick="closeCard()" data-label="Close">✕</div>
+
+<!-- ID Card Overlay - FIXED LANYARD -->
+<div class="overlay" id="overlay">
+  <div class="overlay-bg" onclick="closeCard()"></div>
+  <div class="id-card-wrap" id="idCard">
+    <div class="lanyard-container">
+      <!-- Top clip ring - connects to collar -->
+      <div class="lanyard-top-ring"></div>
+      <div class="lanyard-strap">
+        <div class="lanyard-text">
+          ESG·SUPPLY CHAIN·ESG·SUPPLY CHAIN·ESG·SUPPLY CHAIN·ESG·SUPPLY CHAIN·ESG·SUPPLY CHAIN·ESG·SUPPLY CHAIN·ESG
+        </div>
+      </div>
+      <!-- Connector ring links strap to card hole -->
+      <div class="lanyard-connector-ring"></div>
+    </div>
+    <div class="id-card-body" id="idCardBody">
+      <div class="id-card-hole"></div>
+      <div class="id-card-3d">
+        <div class="card-flipper">
+          <div class="card-face card-front">
+            <div class="card-logo-row">
+        <div class="card-logo-text">ESG · SUPPLY CHAIN</div>
+        <div class="card-status-dot"></div>
+      </div>
+      <div class="card-chip"></div>
+      <div class="card-name">Li Hexin</div>
+      <div class="card-role">ESG / Supply Chain Quality</div>
+      <div class="card-badge">IN PERSON · SHENZHEN</div>
+      <div class="card-divider"></div>
+      <div class="card-fields">
+        <div class="card-field">
+          <span class="cf-label">Location</span>
+          <span class="cf-val">深圳 Shenzhen</span>
+        </div>
+        <div class="card-field">
+          <span class="cf-label">Experience</span>
+          <span class="cf-val">5 Years</span>
+        </div>
+        <div class="card-field">
+          <span class="cf-label">Field</span>
+          <span class="cf-val">AI / ESG / Quality</span>
+        </div>
+        <div class="card-field">
+          <span class="cf-label">Tel</span>
+          <span class="cf-val">13050336380</span>
+        </div>
+        <div class="card-field">
+          <span class="cf-label">Email</span>
+          <span class="cf-val" style="font-size:0.62rem;">healerowl@163.com</span>
+        </div>
+      </div>
+      <div class="card-url">lihexin.esg · © 2026</div>
+    
+          </div>
+          <div class="card-face card-back" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0.5rem;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:0.72rem;font-weight:600;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.45rem;">
+              <span data-zh>深处的我</span><span data-en>The Deeper Me</span>
+            </div>
+            <div class="cf-label" style="margin-bottom:0.2rem;">MBTI</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:700;color:var(--accent);letter-spacing:0.06em;border:1px solid rgba(0,229,160,0.2);background:linear-gradient(135deg,rgba(0,229,160,0.12),rgba(37,99,235,0.08));border-radius:6px;padding:0.2rem 0.6rem;display:inline-block;margin-bottom:0.15rem;">INTJ</div>
+            <div class="cf-val" style="font-size:0.62rem;color:rgba(130,124,118,0.7);margin-bottom:0.45rem;">
+              <span data-zh>建筑师 · 策略者</span><span data-en>Architect · Strategist</span>
+            </div>
+            <div class="cf-label" style="margin-bottom:0.2rem;">DISC</div>
+            <div style="display:flex;gap:0.4rem;justify-content:center;margin-bottom:0.45rem;">
+              <div style="text-align:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.2rem 0.5rem;">
+                <div style="font-family:'Space Grotesk',sans-serif;font-size:0.78rem;font-weight:700;color:var(--accent);">DC</div>
+                <div style="font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:0.05rem;"><span data-zh>工作</span><span data-en>Work</span></div>
+              </div>
+              <div style="text-align:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.2rem 0.5rem;">
+                <div style="font-family:'Space Grotesk',sans-serif;font-size:0.78rem;font-weight:700;color:var(--accent);">DI</div>
+                <div style="font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:0.05rem;"><span data-zh>日常</span><span data-en>Normal</span></div>
+              </div>
+            </div>
+            <div class="cf-label" style="margin-bottom:0.2rem;"><span data-zh>个人描述</span><span data-en>About</span></div>
+            <div style="font-size:0.68rem;color:var(--muted);line-height:1.6;text-align:center;max-width:200px;">
+              <span data-zh>热爱摄影 · 写作<br>网络冲浪发烧博主</span>
+              <span data-en>A photographer, writer<br>and internet enthusiast.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-url" style="position:relative;z-index:5;">lihexin.esg · © 2026</div>
+      <button class="flip-btn" id="flipBtn" onclick="event.stopPropagation();flipCard()">↻</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="parallax-scene">
+    <div class="layer sky" id="layerSky"></div>
+   <div class="aurora"></div>
+    <canvas id="particleCanvas" class="layer"></canvas>
+   <div class="layer" id="layerStars" style="pointer-events:none;">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g id="starsG"></g>
+      </svg>
+    </div>
+    <div class="layer" id="layerMtnBack" style="display:none">
+      <svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+        <path d="M0,700 L120,520 L260,620 L380,480 L500,560 L640,430 L760,530 L880,400 L1000,500 L1120,440 L1260,540 L1380,460 L1440,520 L1440,900 L0,900Z" fill="#0c1e3a" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="layer" id="layerCityBack" style="display:none">
+      <svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+        <g opacity="0.6">
+          <rect x="80" y="480" width="35" height="220" fill="#d8e0ec"/>
+          <rect x="82" y="490" width="4" height="6" fill="rgba(0,229,160,0.3)"/><rect x="88" y="510" width="4" height="6" fill="rgba(0,229,160,0.2)"/><rect x="88" y="530" width="4" height="6" fill="rgba(255,255,255,0.1)"/><rect x="82" y="550" width="4" height="6" fill="rgba(0,229,160,0.25)"/>
+          <rect x="140" y="420" width="50" height="280" fill="#e2e8f0"/>
+          <rect x="143" y="430" width="6" height="8" fill="rgba(200,190,182,0.3)"/><rect x="152" y="430" width="6" height="8" fill="rgba(0,229,160,0.2)"/><rect x="143" y="450" width="6" height="8" fill="rgba(255,255,255,0.15)"/><rect x="152" y="450" width="6" height="8" fill="rgba(0,229,160,0.3)"/><rect x="143" y="470" width="6" height="8" fill="rgba(200,190,182,0.2)"/><rect x="160" y="440" width="4" height="280" fill="#eef1f5"/>
+          <rect x="220" y="500" width="28" height="200" fill="#e5eaf1"/><rect x="270" y="460" width="40" height="240" fill="#ebeff3"/><rect x="330" y="400" width="55" height="300" fill="#dce3ed"/>
+          <rect x="332" y="410" width="7" height="9" fill="rgba(0,229,160,0.35)"/><rect x="342" y="410" width="7" height="9" fill="rgba(255,255,255,0.1)"/><rect x="352" y="410" width="7" height="9" fill="rgba(0,229,160,0.2)"/>
+          <rect x="420" y="350" width="70" height="350" fill="#e0e5ee"/>
+          <rect x="680" y="320" width="80" height="380" fill="#ebeff3"/>
+          <rect x="790" y="400" width="50" height="300" fill="#dce3ed"/><rect x="870" y="340" width="75" height="360" fill="#0a1830"/>
+          <rect x="970" y="420" width="45" height="280" fill="#e3e8ef"/><rect x="1040" y="360" width="60" height="340" fill="#ebeff3"/>
+          <rect x="1130" y="380" width="70" height="320" fill="#dae1eb"/><rect x="1230" y="440" width="40" height="260" fill="#e0e5ee"/>
+          <rect x="1300" y="400" width="55" height="300" fill="#dce3ed"/><rect x="1370" y="460" width="70" height="240" fill="#ebeff3"/>
+        </g>
+        <rect x="0" y="695" width="1440" height="205" fill="url(#groundGrad)"/>
+        <defs>
+          <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#050810" stop-opacity="0"/><stop offset="100%" stop-color="#050810" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="700" width="1440" height="200" fill="#050810"/>
+        <ellipse cx="720" cy="750" rx="400" ry="10" fill="rgba(0,229,160,0.06)"/>
+        <line x1="300" y1="720" x2="1140" y2="720" stroke="rgba(0,229,160,0.08)" stroke-width="1"/>
+        <line x1="200" y1="730" x2="1240" y2="730" stroke="rgba(0,229,160,0.06)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="layer" id="layerNature" style="display:none">
+      <svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+        <g opacity="0.9">
+          <path d="M-20,900 L-20,620 C-10,580,10,550,30,520 C50,490,70,480,80,460 L90,480 C100,500,95,530,90,560 L90,900Z" fill="#c8d1de"/>
+          <path d="M0,900 L5,700 C8,680,15,660,25,640 C35,620,45,610,50,595 L55,610 C60,625,58,650,55,680 L55,900Z" fill="#d1d9e6"/>
+          <path d="M60,900 L65,750 C68,730,75,710,85,695 C95,680,105,670,110,658 L115,670 C120,682,118,705,115,730 L115,900Z" fill="#c8d1de"/>
+        </g>
+        <g opacity="0.9">
+          <path d="M1460,900 L1460,620 C1450,580,1430,550,1410,520 C1390,490,1370,480,1360,460 L1350,480 C1340,500,1345,530,1350,560 L1350,900Z" fill="#c8d1de"/>
+          <path d="M1440,900 L1435,700 C1432,680,1425,660,1415,640 C1405,620,1395,610,1390,595 L1385,610 C1380,625,1382,650,1385,680 L1385,900Z" fill="#d1d9e6"/>
+          <path d="M1380,900 L1375,750 C1372,730,1365,710,1355,695 C1345,680,1335,670,1330,658 L1325,670 C1320,682,1322,705,1325,730 L1325,900Z" fill="#c8d1de"/>
+        </g>
+        <ellipse cx="720" cy="700" rx="900" ry="60" fill="rgba(200,210,225,0.4)"/>
+        <path d="M0,860 Q180,810 360,840 Q540,870 720,850 Q900,830 1080,855 Q1260,875 1440,850 L1440,900 L0,900Z" fill="#d1d9e6" opacity="0.5"/>
+        <circle cx="720" cy="700" r="90" fill="none" stroke="rgba(0,229,160,0.12)" stroke-width="1"/>
+        <circle cx="720" cy="700" r="60" fill="none" stroke="rgba(0,229,160,0.08)" stroke-width="0.5"/>
+        <ellipse cx="720" cy="700" rx="90" ry="30" fill="none" stroke="rgba(0,229,160,0.06)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="layer" id="layerHaze" style="pointer-events:none;">
+      <svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+        <defs>
+          <radialGradient id="hazeCenter" cx="50%" cy="45%" r="40%"><stop offset="0%" stop-color="rgba(0,80,140,0.12)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <radialGradient id="accentGlow" cx="50%" cy="78%" r="30%"><stop offset="0%" stop-color="rgba(0,229,160,0.08)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+        </defs>
+        <rect width="1440" height="900" fill="url(#hazeCenter)"/>
+        <rect width="1440" height="900" fill="url(#accentGlow)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Hero Content (left) -->
+  <div class="hero-content">
+    <div class="hero-intro"><span data-zh>探索我的领域</span><span data-en>Explore My World</span></div>
+    <div class="flowing-menu" id="flowingMenu">
+      <div class="menu-item" data-target="#section-industry">
+        <span class="menu-text"><span data-zh>🏭 行业专业要求</span><span data-en>🏭 Industry Requirements</span></span>
+        <span class="menu-hover"><span data-zh>🏭 行业专业要求</span><span data-en>🏭 Industry Requirements</span></span>
+      </div>
+      <div class="menu-item" data-target="#section-esg">
+        <span class="menu-text"><span data-zh>📊 ESG方法论</span><span data-en>📊 ESG Methodology</span></span>
+        <span class="menu-hover"><span data-zh>📊 ESG方法论</span><span data-en>📊 ESG Methodology</span></span>
+      </div>
+      <div class="menu-item" data-target="#section-frameworks">
+        <span class="menu-text"><span data-zh>📋 ESG披露标准与评级</span><span data-en>📋 ESG Disclosure Standards</span></span>
+        <span class="menu-hover"><span data-zh>📋 ESG披露标准与评级</span><span data-en>📋 ESG Disclosure Standards</span></span>
+      </div>
+      <div class="menu-item" data-target="#section-about">
+        <span class="menu-text"><span data-zh>👤 关于我</span><span data-en>👤 About Me</span></span>
+        <span class="menu-hover"><span data-zh>👤 关于我</span><span data-en>👤 About Me</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Container (right) - floating portrait -->
+  <div id="photo-container">
+    <div class="photo-shadow"></div>
+    <div class="photo-aura"></div>
+    <div class="photo-wrap">
+      <img src="photo.jpg" alt="Li Hexin" class="photo-img" id="profilePhoto">
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span data-zh>向下探索</span>
+    <span data-en>Scroll</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="full-divider"></div>
+  <div class="full-divider"></div>
+
+  <section id="section-industry">
+    <div class="section-label">// <span data-zh>行业专业要求</span><span data-en>Industry Requirements</span></div>
+    <h2 class="section-title"><span data-zh>跨行业专业能力框架</span><span data-en>Cross-Industry Competency Framework</span></h2>
+    <div class="esg-grid">
+      <div class="esg-card">
+        <div class="esg-letter">🚗</div>
+        <h3><span data-zh>汽车行业 (Automotive)</span><span data-en>Automotive</span></h3>
+        <ul>
+          <li>IATF 16949 <span data-zh>体系认证</span><span data-en>System Certification</span></li>
+          <li>VDA 6.3 <span data-zh>过程审核</span><span data-en>Process Audit</span></li>
+          <li>APQP / PPAP <span data-zh>产品开发</span><span data-en>Product Development</span></li>
+          <li>PFMEA / Control Plan</li>
+          <li>IMDS / CAMDS <span data-zh>材料合规</span><span data-en>Material Compliance</span></li>
+        </ul>
+      </div>
+      <div class="esg-card">
+        <div class="esg-letter">⚡</div>
+        <h3><span data-zh>电子与消费品</span><span data-en>Electronics & Consumer</span></h3>
+        <ul>
+          <li>ISO 9001 / 14001</li>
+          <li>IPC-A-610 <span data-zh>焊接标准</span><span data-en>Soldering Standard</span></li>
+          <li>RSL / PFAS <span data-zh>限用物质</span><span data-en>Restricted Substances</span></li>
+          <li>BSCI / SA8000 <span data-zh>社会责任</span><span data-en>Social Responsibility</span></li>
+          <li>REACH / RoHS</li>
+        </ul>
+      </div>
+      <div class="esg-card">
+        <div class="esg-letter">🌿</div>
+        <h3><span data-zh>ESG通用要求</span><span data-en>General ESG Requirements</span></h3>
+        <ul>
+          <li>GRI / SASB / TCFD <span data-zh>报告标准</span><span data-en>Reporting Standards</span></li>
+          <li>ISO 14064 / 14067 <span data-zh>碳管理</span><span data-en>Carbon Management</span></li>
+          <li>SBTi <span data-zh>科学碳目标</span><span data-en>Science-Based Targets</span></li>
+          <li>UN SDGs <span data-zh>可持续发展目标</span><span data-en>Sustainable Development Goals</span></li>
+          <li>CDP <span data-zh>碳披露</span><span data-en>Carbon Disclosure</span></li>
+        </ul>
+      </div>
+      <div class="esg-card">
+        <div class="esg-letter">🔗</div>
+        <h3><span data-zh>供应链管理</span><span data-en>Supply Chain Management</span></h3>
+        <ul>
+          <li><span data-zh>供应商ESG 风险评估</span><span data-en>Supplier ESG Risk Assessment</span></li>
+          <li>Responsible Sourcing</li>
+          <li><span data-zh>冲突矿产管理</span><span data-en>Conflict Minerals Management</span></li>
+          <li><span data-zh>供应链碳足迹</span><span data-en>Supply Chain Carbon Footprint</span></li>
+          <li><span data-zh>可持续采购</span><span data-en>Sustainable Procurement</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <div class="full-divider"></div>
+
+  <!-- ESG KNOWLEDGE SECTION -->
+  <section id="section-esg">
+    <div class="section-label">// ESG <span data-zh>行业知识</span><span data-en>Industry Knowledge</span></div>
+    <h2 class="section-title"><span data-zh>ESG方法论</span><span data-en>ESG Methodology</span></h2>
+    <div class="esg-grid">
+      <!-- E -->
+      <div class="esg-card">
+        <div class="esg-letter">E</div>
+        <h3><span data-zh>环境 (Environmental)</span><span data-en>Environmental</span></h3>
+        <p><span data-zh>应对气候变化、资源效率与生态保护，是企业可持续发展的核心议题。</span><span data-en>Climate change, resource efficiency & ecological protection are core sustainability issues.</span></p>
+        <ul>
+          <li><span data-zh>气候变化与碳排放</span><span data-en>Climate & Carbon Emissions</span></li>
+          <li><span data-zh>水资源管理与循环利用</span><span data-en>Water Management & Recycling</span></li>
+          <li><span data-zh>废弃物管理与循环经济</span><span data-en>Waste Management & Circular Economy</span></li>
+          <li><span data-zh>生物多样性保护</span><span data-en>Biodiversity Protection</span></li>
+          <li><span data-zh>有害物质管控 (RSL/PFAS)</span><span data-en>Hazardous Substances (RSL/PFAS)</span></li>
+        </ul>
+      </div>
+      <!-- S -->
+      <div class="esg-card">
+        <div class="esg-letter">S</div>
+        <h3><span data-zh>社会 (Social)</span><span data-en>Social</span></h3>
+        <p><span data-zh>关注劳工权益、人权保障与社区贡献，构建和谐共生的社会价值。</span><span data-en>Focus on labor rights, human rights & community contribution to build social value.</span></p>
+        <ul>
+          <li><span data-zh>劳工权益与工作条件</span><span data-en>Labor Rights & Working Conditions</span></li>
+          <li><span data-zh>职业健康与安全 (OHS)</span><span data-en>Occupational Health & Safety</span></li>
+          <li><span data-zh>多元化与包容性</span><span data-en>Diversity & Inclusion</span></li>
+          <li><span data-zh>供应链人权尽调</span><span data-en>Supply Chain Human Rights Due Diligence</span></li>
+          <li><span data-zh>社区投资与影响</span><span data-en>Community Investment & Impact</span></li>
+        </ul>
+      </div>
+      <!-- G -->
+      <div class="esg-card">
+        <div class="esg-letter">G</div>
+        <h3><span data-zh>治理 (Governance)</span><span data-en>Governance</span></h3>
+        <p><span data-zh>企业治理结构、商业道德与透明度，是ESG体系的根基与保障。</span><span data-en>Corporate governance, business ethics & transparency form the foundation of ESG.</span></p>
+        <ul>
+          <li><span data-zh>董事会结构与多元化</span><span data-en>Board Structure & Diversity</span></li>
+          <li><span data-zh>反腐败与商业道德</span><span data-en>Anti-corruption & Business Ethics</span></li>
+          <li><span data-zh>风险管理与内部控制</span><span data-en>Risk Management & Internal Control</span></li>
+          <li><span data-zh>数据隐私与网络安全</span><span data-en>Data Privacy & Cybersecurity</span></li>
+          <li><span data-zh>信息披露与股东权益</span><span data-en>Disclosure & Shareholder Rights</span></li>
+        </ul>
+      </div>
+      <!-- Supply Chain ESG -->
+      <div class="esg-card">
+        <div class="esg-letter" style="background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SC</div>
+        <h3><span data-zh>供应链 ESG</span><span data-en>Supply Chain ESG</span></h3>
+        <p><span data-zh>从供应商准入到全生命周期管理，将ESG嵌入供应链运营全程。</span><span data-en>Embedding ESG across supplier onboarding to full lifecycle management.</span></p>
+        <ul>
+          <li><span data-zh>供应商ESG风险评估</span><span data-en>Supplier ESG Risk Assessment</span></li>
+          <li><span data-zh>可持续采购 (Responsible Sourcing)</span><span data-en>Responsible Sourcing</span></li>
+          <li><span data-zh>碳足迹追踪 (Scope 1-3)</span><span data-en>Carbon Footprint Tracking (Scope 1-3)</span></li>
+          <li><span data-zh>供应商能力建设与培训</span><span data-en>Supplier Capacity Building & Training</span></li>
+          <li><span data-zh>冲突矿产管理</span><span data-en>Conflict Minerals Management</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="full-divider"></div>
+
+  <!-- ESG REPORTING FRAMEWORKS -->
+  <section id="section-frameworks">
+    <div class="section-label">// <span data-zh>报告框架</span><span data-en>Reporting Frameworks</span></div>
+    <h2 class="section-title"><span data-zh>ESG 披露标准与评级</span><span data-en>ESG Disclosure Standards & Ratings</span></h2>
+    <div class="framework-grid">
+      <div class="fw-item"><a href="https://www.globalreporting.org/standards/download-the-standards/" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">GRI Standards <span style="color:var(--muted);font-size:0.7rem;" data-zh>(全球报告倡议)</span><span style="color:var(--muted);font-size:0.7rem;" data-en>(Global Reporting Initiative)</span></div></a></div>
+      <div class="fw-item"><a href="https://www.sasb.org/standards/" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">SASB <span style="color:var(--muted);font-size:0.7rem;" data-zh>(可持续会计标准)</span><span style="color:var(--muted);font-size:0.7rem;" data-en>(Sustainability Accounting Standard)</span></div></a></div>
+      <div class="fw-item"><a href="https://www.fsb-tcfd.org/" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">TCFD <span style="color:var(--muted);font-size:0.7rem;" data-zh>(气候相关财务披露)</span><span style="color:var(--muted);font-size:0.7rem;" data-en>(Climate-Related Financial Disclosures)</span></div></a></div>
+      <div class="fw-item"><a href="https://www.ifrs.org/groups/international-sustainability-standards-board/" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">ISSB <span style="color:var(--muted);font-size:0.7rem;" data-zh>(国际可持续准则)</span><span style="color:var(--muted);font-size:0.7rem;" data-en>(International Sustainability Standards)</span></div></a></div>
+      <div class="fw-item"><a href="https://sdgs.un.org/goals" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">UN SDGs <span style="color:var(--muted);font-size:0.7rem;" data-zh>(联合国可持续发展目标)</span><span style="color:var(--muted);font-size:0.7rem;" data-en>(UN Sustainable Development Goals)</span></div></a></div>
+      <div class="fw-item"><a href="https://www.cdp.net/en" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">CDP <span style="color:var(--muted);font-size:0.7rem;" data-zh>(碳披露项目)</span><span style="color:var(--muted);font-size:0.7rem;" data-en>(Carbon Disclosure Project)</span></div></a></div>
+      <div class="fw-item"><a href="https://www.msci.com/our-solutions/esg-investing/esg-ratings" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">MSCI ESG Ratings</div></a></div>
+      <div class="fw-item"><a href="https://www.sustainalytics.com/" target="_blank" rel="noopener noreferrer"><div class="fw-dot"></div><div class="fw-text">Sustainalytics</div></a></div>
+    </div>
+  </section>
+
+  
+  
+  <div class="full-divider"></div>
+
+  <section id="section-about">
+    <div class="section-label">// <span data-zh>关于我</span><span data-en>About Me</span></div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Li Hexin</h2>
+    <div style="font-size:0.9rem;color:var(--accent);margin-bottom:2rem;font-family:'Space Grotesk',sans-serif;letter-spacing:0.02em;">
+      <span data-zh>ESG / 供应链质量 · 深圳</span>
+      <span data-en>ESG / Supply Chain Quality · Shenzhen</span>
+    </div>
+
+    <div class="metrics" style="margin-bottom:2rem;">
+      <div class="metric"><span class="metric-num">5+</span><div class="metric-label"><span data-zh>年行业经验</span><span data-en>Years Experience</span></div></div>
+      <div class="metric"><span class="metric-num">23.9%</span><div class="metric-label"><span data-zh>推动供应链碳强度下降</span><span data-en>Carbon Intensity Reduction</span></div></div>
+      <div class="metric"><span class="metric-num">472T</span><div class="metric-label"><span data-zh>2025年推动去塑量</span><span data-en>Plastic Reduction 2025</span></div></div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:2rem;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;color:var(--accent);margin-bottom:0.75rem;letter-spacing:0.1em;text-transform:uppercase;"><span data-zh>专业概述</span><span data-en>Professional Summary</span></h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.8;">
+        <span data-zh>5年跨国企业背景，专注于ESG可持续发展与供应链质量管理。曾任职于迪卡侬、Leviton、Dräxlmaier等知名跨国企业，主导供应商ESG治理、供应链减碳、可持续产品开发等项目，具备丰富的体系审核与供应商质量开发经验。</span>
+        <span data-en>5 years of multinational experience specializing in ESG sustainability and supply chain quality management. Previously served at Decathlon, Leviton, and Dräxlmaier Group, leading supplier ESG governance, decarbonization, and sustainable product development projects with extensive system auditing and supplier quality development expertise.</span>
+      </p>
+    </div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;color:var(--accent);margin-bottom:1.25rem;letter-spacing:0.1em;text-transform:uppercase;"><span data-zh>工作经历</span><span data-en>Experience</span></h3>
+    <div class="timeline" style="margin-bottom:2rem;">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-period">2024.06 — 2026.05</div><div class="tl-role"><span data-zh>供应链工业化质量开发主管</span><span data-en>Supply Industrialization & Quality Development Leader</span></div><div class="tl-company">DECATHLON · <span data-zh>深圳</span><span data-en>Shenzhen</span></div>
+        <div class="tl-projects">
+          <div class="tl-project">
+            <div class="tl-project-title">📋 <span data-zh>项目一：供应商质量与ESG风险管理体系建设</span><span data-en>Project 1: Supplier Quality & ESG Risk Management System</span></div>
+            <div class="tl-project-desc"><span data-zh>建立并优化供应商质量与ESG一体化管理体系，基于IATF 16949/VDA 6.3要求，覆盖供应商准入审核、过程审核、绩效评价及持续改进机制；主导供应商审核及CAPA闭环管理，推动质量与合规风险持续降低。</span><span data-en>Established and optimized integrated supplier quality and ESG management system based on IATF 16949/VDA 6.3, covering supplier qualification audits, process audits, performance evaluation, and continuous improvement mechanisms; led supplier audits and CAPA闭环 management, driving continuous reduction of quality and compliance risks.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-desc"><span data-zh>构建供应商分级与动态管理机制（QCDS + ESG风险维度），实现重点供应商分层管控与资源优先配置，提升供应链稳定性与可追溯性。</span><span data-en>Established supplier tiered classification and dynamic management mechanism (QCDS + ESG risk dimensions), enabling stratified control and priority resource allocation for key suppliers, improving supply chain stability and traceability.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-title">📊 <span data-zh>项目二：供应商质量绩效与持续改善项目</span><span data-en>Project 2: Supplier Quality Performance & Continuous Improvement</span></div>
+            <div class="tl-project-desc"><span data-zh>建立供应商质量绩效评价体系（PPM、来料不良率、交付达成率等），推动供应商月度绩效评审与分级管理，实现质量问题数据化管理。</span><span data-en>Established supplier quality performance evaluation system (PPM, incoming defect rate, delivery achievement rate), driving monthly performance reviews and tiered management for data-driven quality control.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-desc"><span data-zh>主导供应商质量问题改善项目，运用8D、5Why、鱼骨图等工具进行根因分析，推动供应商制定并落实纠正预防措施（CAPA），验证改善有效性。</span><span data-en>Led supplier quality issue improvement projects using 8D, 5Why, and fishbone diagram tools for RCA, driving suppliers to implement and verify CAPA effectiveness.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-desc"><span data-zh>推动关键供应商过程能力提升，结合SPC/CPK监控关键工序稳定性，<span class="tl-highlight">实现供应商质量波动显著降低</span>。</span><span data-en>Drove key supplier process capability improvement using SPC/CPK to monitor critical process stability, <span class="tl-highlight">achieving significant reduction in supplier quality variation</span>.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-title">🌿 <span data-zh>项目三：供应链风险控制与绿色合规管理</span><span data-en>Project 3: Supply Chain Risk Control & Green Compliance</span></div>
+            <div class="tl-project-desc"><span data-zh>在供应商管理中导入材料合规与过程风险控制机制（REACH/RSL/PFAS等），识别潜在质量与法规风险点，前置控制供应链风险。</span><span data-en>Introduced material compliance and process risk control mechanisms (REACH/RSL/PFAS) in supplier management, identifying potential quality and regulatory risks for proactive supply chain risk control.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-desc"><span data-zh>推动供应商能源与资源管理改善，将ESG指标纳入供应商质量评价体系，实现质量与可持续指标协同管理；<span class="tl-highlight">主导Scope 1-3碳排放盘查，推动供应链碳排放强度整体下降约23.9%（2024-2025）</span>，响应集团SBTi减碳目标。</span><span data-en>Drove supplier energy and resource management improvements, integrating ESG indicators into supplier quality evaluation for coordinated quality and sustainability management; <span class="tl-highlight">led Scope 1-3 carbon inventory, achieving ~23.9% supply chain carbon intensity reduction</span>, supporting SBTi targets.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-title">💻 <span data-zh>项目四：产品开发数字化与组织赋能项目</span><span data-en>Project 4: Product Development Digitalization & Empowerment</span></div>
+            <div class="tl-project-desc"><span data-zh>搭建供应商质量与绩效数据看板（Power BI），实现PPM、交付、审核结果及风险等级可视化管理。</span><span data-en>Built supplier quality and performance dashboards (Power BI) for visual management of PPM, delivery, audit results, and risk levels.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-desc"><span data-zh>支持新产品导入（NPI）阶段供应商质量管理，参与APQP评审、PFMEA审核、Control Plan确认及PPAP过程管理，管理35+新产品开发，<span class="tl-highlight">准时交付率98.5%</span>，价格达成率100%。</span><span data-en>Supported NPI supplier quality management through APQP reviews, PFMEA audits, Control Plan validation, and PPAP process management; managed 35+ NPD projects with <span class="tl-highlight">98.5% on-time delivery</span> and 100% RFQ cost attainment.</span></div>
+          </div>
+          <div class="tl-project">
+            <div class="tl-project-desc"><span data-zh>组织供应商质量与体系培训（IATF 16949/VDA 6.3/8D），累计开展8场专项培训，提升供应商质量管理能力与响应效率。</span><span data-en>Conducted supplier quality and system training (IATF 16949/VDA 6.3/8D), delivering 8 specialized training sessions to enhance supplier quality management capability and response efficiency.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-period">2023.09 — 2024.06</div><div class="tl-role"><span data-zh>供应商质量开发工程师（SQE）</span><span data-en>Supplier Quality Engineer</span></div><div class="tl-company">Leviton Manufacturing · <span data-zh>深圳</span><span data-en>Shenzhen</span></div>
+        <div class="tl-projects">
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>独立完成10+家供应商现场审核，涵盖五金注塑、电子元器件、包材等品类，针对供应商质量体系、过程能力及交付绩效进行综合评估与准入审核。</span><span data-en>Independently completed 10+ on-site supplier audits covering metal stamping, injection molding, electronic components, and packaging materials, assessing quality systems, process capability, and delivery performance.</span></div></div>
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>主导10+新品导入项目（APQP/PFMEA/PPAP），涵盖从样品验证、试产到量产全流程质量控制，<span class="tl-highlight">实现零停产、零延误</span>。</span><span data-en>Led 10+ NPI projects (APQP/PFMEA/PPAP) covering full quality control from sample validation through pilot run to mass production, <span class="tl-highlight">achieving zero production downtime</span>.</span></div></div>
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>建立供应商月度质量绩效评价体系，通过PPM、准时交付率、不良问题闭环率等关键指标进行动态分级管理，推动五金类供应商PPM<span class="tl-highlight">下降12%</span>。</span><span data-en>Established monthly supplier quality performance evaluation system with PPM, on-time delivery, and defect closure rate KPIs, driving <span class="tl-highlight">12% PPM reduction</span> in metal component suppliers.</span></div></div>
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>处理供应商重大质量问题（8D/CAR），主导根本原因分析与纠正预防措施，推动供应商持续改善；参与年度供应商大会质量板块汇报。</span><span data-en>Managed major supplier quality issues (8D/CAR), led root cause analysis and corrective/preventive actions, driving continuous improvement; contributed to annual supplier summit quality review.</span></div></div>
+        </div>
+      </div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-period">2020.09 — 2023.09</div><div class="tl-role"><span data-zh>体系工程师</span><span data-en>Quality Management System Engineer</span></div><div class="tl-company">Dräxlmaier Group · <span data-zh>汽车行业</span><span data-en>Automotive</span></div>
+        <div class="tl-projects">
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>组织实施IATF 16949内部体系审核，制定年度审核计划，覆盖过程审核（VDA 6.3）、产品审核（VDA 6.5）和体系审核，支持宝马客户年度潜在供应商审核及第三方认证机构监督审核，<span class="tl-highlight">推动工厂连续通过审核认证</span>。</span><span data-en>Organized IATF 16949 internal system audits with annual audit plans covering process audits (VDA 6.3), product audits (VDA 6.5), and system audits; supported BMW annual potential supplier audits and third-party certification audits, <span class="tl-highlight">maintaining continuous certification</span>.</span></div></div>
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>主导PFMEA动态维护与风险评估工作，协调跨部门团队进行过程失效模式分析，更新控制计划与作业指导书，有效降低生产过程质量风险。</span><span data-en>Led PFMEA dynamic maintenance and risk assessment, coordinating cross-functional teams for process failure mode analysis, updating control plans and work instructions to effectively reduce production quality risks.</span></div></div>
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>应用SPC统计过程控制与MSA测量系统分析工具，对关键过程特性进行监控与分析，识别过程变异并及时采取纠正措施，提升过程能力指数（Cpk）。</span><span data-en>Applied SPC and MSA tools to monitor and analyze key process characteristics, identifying process variation and implementing timely corrective actions to improve process capability indices (Cpk).</span></div></div>
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>推动工厂质量KPI数字化管理，建立质量数据看板，实现质量指标实时监控与趋势分析，为管理层决策提供数据支持。</span><span data-en>Drove factory quality KPI digitalization, establishing quality dashboards for real-time monitoring and trend analysis of quality metrics, providing data-driven decision support for management.</span></div></div>
+          <div class="tl-project"><div class="tl-project-desc"><span data-zh>组织内部质量培训与体系宣贯，提升全员质量意识，累计开展SPC/MSA、8D问题解决等专项培训。</span><span data-en>Organized internal quality training and system awareness programs, delivering SPC/MSA, 8D problem-solving, and other specialized training sessions to enhance quality culture.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:0.75rem;font-weight:600;color:var(--accent);margin-bottom:0.75rem;letter-spacing:0.1em;text-transform:uppercase;"><span data-zh>核心能力</span><span data-en>Core Skills</span></h3>
+        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+          <span class="stag">ESG Reporting</span><span class="stag">GRI/TCFD/SASB</span>
+          <span class="stag">ISO 14067</span><span class="stag">Scope 1-3</span>
+          <span class="stag">IATF16949</span><span class="stag">ISO 9001</span>
+          <span class="stag">VDA6.3</span><span class="stag">APQP/PPAP</span>
+          <span class="stag">PFMEA</span><span class="stag">SPC/MSA</span>
+          <span class="stag">Power BI</span><span class="stag">Tableau</span>
+          <span class="stag">BSCI/SA8000</span><span class="stag">LCA</span>
+        </div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:0.75rem;font-weight:600;color:var(--accent);margin-bottom:0.75rem;letter-spacing:0.1em;text-transform:uppercase;"><span data-zh>资质与教育</span><span data-en>Credentials & Education</span></h3>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.8rem;color:var(--muted);">
+          <div>• CFA Certificate in ESG Investing</div>
+          <div>• <span data-zh>注册ESG分析师（中高级）</span><span data-en>Certified ESG Analyst</span></div>
+          <div>• ISO 9001 <span data-zh>注册主任审核员</span><span data-en>Lead Auditor</span></div>
+          <div>• ISO 14067 <span data-zh>碳足迹内审员</span><span data-en>Carbon Footprint Auditor</span></div>
+          <div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--border);">
+            <span style="font-weight:500;color:var(--text);"><span data-zh>辽东学院</span><span data-en>Liaodong University</span></span><br>
+            <span data-zh>本科 专业：自然地理与资源环境 · 2016–2020</span><span data-en>B.Sc. Geography & Resource Environment · 2016–2020</span>
+          </div>
+          <div style="margin-top:0.25rem;color:rgba(0,229,160,0.7);"><span data-zh>语言</span><span data-en>Languages</span>: English · <span data-zh>粤语</span><span data-en>Cantonese</span> · <span data-zh>普通话</span><span data-en>Mandarin</span></div>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- Competency Radar + Toolkit -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:2rem;">
+    <div class="tk-row">
+      <!-- Radar Column -->
+      <div class="tk-col-radar">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;color:var(--accent);margin-bottom:0.8rem;letter-spacing:0.1em;text-transform:uppercase;">
+          <span data-zh>能力分析雷达图</span><span data-en>Competency Radar</span>
+        </h3>
+        <!-- Legend -->
+        <div style="display:flex;gap:1rem;margin-bottom:0.8rem;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <span style="width:18px;height:3px;background:var(--accent);display:inline-block;border-radius:2px;"></span>
+            <span style="font-size:0.65rem;color:var(--muted);font-family:'Space Grotesk',sans-serif;"><span data-zh>个人水平</span><span data-en>My Score</span></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <span style="width:18px;height:0;border-top:2px dashed rgba(255,255,255,0.25);display:inline-block;"></span>
+            <span style="font-size:0.65rem;color:var(--muted);font-family:'Space Grotesk',sans-serif;"><span data-zh>市场平均</span><span data-en>Market Avg</span></span>
+          </div>
+        </div>
+        <div id="radarContainer">
+          <canvas id="radarChart" width="520" height="520"></canvas>
+        </div>
+      </div>
+      <!-- Toolkit Column -->
+      <div class="tk-col-menu">
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;color:var(--accent);margin-bottom:1rem;letter-spacing:0.1em;text-transform:uppercase;">
+      <span data-zh>🛠 工具包</span><span data-en>🛠 Toolkit</span>
+    </h3>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="esg-report">
+          <span><span data-zh>ESG报告编制</span><span data-en>ESG Reporting</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="esg-report">
+          <div class="tk-section-label">RASIC <span data-zh>模型</span><span data-en>Model</span></div>
+          <div class="tk-rasic">
+            <span class="tk-rasic-letter">R</span>
+            <span class="tk-rasic-text"><span data-zh>负责人: ESG经理</span><span data-en>Responsible: ESG Manager</span></span>
+            <span class="tk-rasic-letter">A</span>
+            <span class="tk-rasic-text"><span data-zh>批准人: 可持续发展总监</span><span data-en>Accountable: Sustainability Director</span></span>
+            <span class="tk-rasic-letter">S</span>
+            <span class="tk-rasic-text"><span data-zh>支持者: 数据团队/各职能部门</span><span data-en>Support: Data Team/Depts</span></span>
+            <span class="tk-rasic-letter">I</span>
+            <span class="tk-rasic-text"><span data-zh>知情者: 董事会/投资者</span><span data-en>Informed: Board/Investors</span></span>
+            <span class="tk-rasic-letter">C</span>
+            <span class="tk-rasic-text"><span data-zh>咨询者: 外部审计/咨询机构</span><span data-en>Consulted: External Auditor/Consultant</span></span>
+          </div>
+          <div class="tk-section-label"><span data-zh>操作步骤</span><span data-en>Steps</span></div>
+          <ul class="tk-steps">
+            <li><span data-zh>实质性议题识别与排序</span><span data-en>Materiality assessment & prioritization</span></li>
+            <li><span data-zh>选择报告框架（GRI/SASB/ISSB）</span><span data-en>Select reporting framework (GRI/SASB/ISSB)</span></li>
+            <li><span data-zh>数据收集与核验</span><span data-en>Data collection & verification</span></li>
+            <li><span data-zh>报告撰写与设计</span><span data-en>Report drafting & design</span></li>
+            <li><span data-zh>第三方审核与鉴证</span><span data-en>Third-party audit & assurance</span></li>
+            <li><span data-zh>报告发布与沟通</span><span data-en>Report publication & communication</span></li>
+          </ul>
+          <div class="tk-section-label"><span data-zh>绩效指标</span><span data-en>KPIs</span></div>
+          <div class="tk-kpis">
+            <span class="tk-kpi-tag"><span data-zh>报告完成率 100%</span><span data-en>Report completion 100%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>数据核验覆盖率 ≥95%</span><span data-en>Data verification coverage ≥95%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>披露时效性（年报后3个月内）</span><span data-en>Disclosure timeliness (within 3mo)</span></span>
+            <span class="tk-kpi-tag"><span data-zh>利益相关方满意度 ≥80%</span><span data-en>Stakeholder satisfaction ≥80%</span></span>
+          </div>
+        </div>
+      </div>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="carbon">
+          <span><span data-zh>碳排查 GHG</span><span data-en>Carbon Audit GHG</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="carbon">
+          <div class="tk-section-label">RASIC <span data-zh>模型</span><span data-en>Model</span></div>
+          <div class="tk-rasic">
+            <span class="tk-rasic-letter">R</span>
+            <span class="tk-rasic-text"><span data-zh>负责人: 碳管理专员</span><span data-en>Responsible: Carbon Specialist</span></span>
+            <span class="tk-rasic-letter">A</span>
+            <span class="tk-rasic-text"><span data-zh>批准人: 可持续发展总监</span><span data-en>Accountable: Sustainability Director</span></span>
+            <span class="tk-rasic-letter">S</span>
+            <span class="tk-rasic-text"><span data-zh>支持者: 能源/供应链/财务部门</span><span data-en>Support: Energy/Supply Chain/Finance</span></span>
+            <span class="tk-rasic-letter">I</span>
+            <span class="tk-rasic-text"><span data-zh>知情者: CDP/SBTi</span><span data-en>Informed: CDP/SBTi</span></span>
+            <span class="tk-rasic-letter">C</span>
+            <span class="tk-rasic-text"><span data-zh>咨询者: 第三方核验机构</span><span data-en>Consulted: Third-party Verifier</span></span>
+          </div>
+          <div class="tk-section-label"><span data-zh>操作步骤</span><span data-en>Steps</span></div>
+          <ul class="tk-steps">
+            <li><span data-zh>组织边界与运营边界界定</span><span data-en>Define organizational & operational boundaries</span></li>
+            <li><span data-zh>排放源识别与分类</span><span data-en>Identify & classify emission sources</span></li>
+            <li><span data-zh>活动数据采集</span><span data-en>Collect activity data</span></li>
+            <li><span data-zh>排放因子选择与计算</span><span data-en>Select emission factors & calculate</span></li>
+            <li><span data-zh>数据质量审核</span><span data-en>Data quality review</span></li>
+            <li><span data-zh>减排路径规划与目标设定</span><span data-en>Plan reduction pathway & set targets</span></li>
+          </ul>
+          <div class="tk-section-label"><span data-zh>绩效指标</span><span data-en>KPIs</span></div>
+          <div class="tk-kpis">
+            <span class="tk-kpi-tag"><span data-zh>Scope 1/2/3 数据覆盖</span><span data-en>Scope 1/2/3 data coverage</span></span>
+            <span class="tk-kpi-tag"><span data-zh>排放强度下降率 ≥5%/年</span><span data-en>Emission intensity reduction ≥5%/yr</span></span>
+            <span class="tk-kpi-tag"><span data-zh>数据核验通过率 ≥95%</span><span data-en>Data verification pass rate ≥95%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>SBTi 目标对齐度</span><span data-en>SBTi target alignment</span></span>
+          </div>
+        </div>
+      </div>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="supplier-audit">
+          <span><span data-zh>供应商审核</span><span data-en>Supplier Audit</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="supplier-audit">
+          <div class="tk-section-label">RASIC <span data-zh>模型</span><span data-en>Model</span></div>
+          <div class="tk-rasic">
+            <span class="tk-rasic-letter">R</span>
+            <span class="tk-rasic-text"><span data-zh>负责人: SQE/供应商质量工程师</span><span data-en>Responsible: SQE/Supplier Quality Engineer</span></span>
+            <span class="tk-rasic-letter">A</span>
+            <span class="tk-rasic-text"><span data-zh>批准人: 采购总监</span><span data-en>Accountable: Procurement Director</span></span>
+            <span class="tk-rasic-letter">S</span>
+            <span class="tk-rasic-text"><span data-zh>支持者: 供应商/质量部</span><span data-en>Support: Supplier/Quality Dept</span></span>
+            <span class="tk-rasic-letter">I</span>
+            <span class="tk-rasic-text"><span data-zh>知情者: 采购部/合规部</span><span data-en>Informed: Procurement/Compliance</span></span>
+            <span class="tk-rasic-letter">C</span>
+            <span class="tk-rasic-text"><span data-zh>咨询者: 第三方审核机构</span><span data-en>Consulted: Third-party Auditor</span></span>
+          </div>
+          <div class="tk-section-label"><span data-zh>操作步骤</span><span data-en>Steps</span></div>
+          <ul class="tk-steps">
+            <li><span data-zh>供应商风险评估与分级</span><span data-en>Supplier risk assessment & classification</span></li>
+            <li><span data-zh>制定审核计划（年度）</span><span data-en>Develop annual audit plan</span></li>
+            <li><span data-zh>现场/远程审核实施</span><span data-en>Conduct on-site/remote audit</span></li>
+            <li><span data-zh>不符合项报告与CAPA</span><span data-en>NC report & CAPA</span></li>
+            <li><span data-zh>CAPA跟踪与闭环验证</span><span data-en>CAPA tracking & closure verification</span></li>
+            <li><span data-zh>绩效评价与再审核</span><span data-en>Performance review & re-audit</span></li>
+          </ul>
+          <div class="tk-section-label"><span data-zh>绩效指标</span><span data-en>KPIs</span></div>
+          <div class="tk-kpis">
+            <span class="tk-kpi-tag"><span data-zh>关键供应商审核覆盖率 100%</span><span data-en>Key supplier audit coverage 100%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>CAPA闭环率 ≥90%</span><span data-en>CAPA closure rate ≥90%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>审核问题重复发生率 ≤10%</span><span data-en>Audit issue recurrence ≤10%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>供应商PPM 年度改善 ≥10%</span><span data-en>Supplier PPM annual improvement ≥10%</span></span>
+          </div>
+        </div>
+      </div>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="rating">
+          <span><span data-zh>评级优化</span><span data-en>Rating Optimization</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="rating">
+          <div class="tk-section-label">RASIC <span data-zh>模型</span><span data-en>Model</span></div>
+          <div class="tk-rasic">
+            <span class="tk-rasic-letter">R</span>
+            <span class="tk-rasic-text"><span data-zh>负责人: ESG分析师/IR团队</span><span data-en>Responsible: ESG Analyst/IR Team</span></span>
+            <span class="tk-rasic-letter">A</span>
+            <span class="tk-rasic-text"><span data-zh>批准人: CFO/董事会</span><span data-en>Accountable: CFO/Board</span></span>
+            <span class="tk-rasic-letter">S</span>
+            <span class="tk-rasic-text"><span data-zh>支持者: 各业务部门</span><span data-en>Support: Business Units</span></span>
+            <span class="tk-rasic-letter">I</span>
+            <span class="tk-rasic-text"><span data-zh>知情者: 投资者关系部</span><span data-en>Informed: Investor Relations</span></span>
+            <span class="tk-rasic-letter">C</span>
+            <span class="tk-rasic-text"><span data-zh>咨询者: MSCI/Sustainalytics</span><span data-en>Consulted: MSCI/Sustainalytics</span></span>
+          </div>
+          <div class="tk-section-label"><span data-zh>操作步骤</span><span data-en>Steps</span></div>
+          <ul class="tk-steps">
+            <li><span data-zh>评级标准对标分析</span><span data-en>Benchmark rating criteria</span></li>
+            <li><span data-zh>差距评估与优先行动</span><span data-en>Gap assessment & priority actions</span></li>
+            <li><span data-zh>数据准备与披露优化</span><span data-en>Data preparation & disclosure optimization</span></li>
+            <li><span data-zh>评级机构沟通</span><span data-en>Engage with rating agencies</span></li>
+            <li><span data-zh>持续监控与改善</span><span data-en>Continuous monitoring & improvement</span></li>
+          </ul>
+          <div class="tk-section-label"><span data-zh>绩效指标</span><span data-en>KPIs</span></div>
+          <div class="tk-kpis">
+            <span class="tk-kpi-tag"><span data-zh>MSCI/Sustainalytics 评级提升</span><span data-en>MSCI/Sustainalytics rating upgrade</span></span>
+            <span class="tk-kpi-tag"><span data-zh>关键指标得分率 ≥80%</span><span data-en>Key indicator score ≥80%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>数据回复及时率 100%</span><span data-en>Data response timeliness 100%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>年度评级改善幅度 ≥1级</span><span data-en>Annual rating improvement ≥1 notch</span></span>
+          </div>
+        </div>
+      </div>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="tcfd">
+          <span><span data-zh>TCFD气候风险</span><span data-en>TCFD Climate Risk</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="tcfd">
+          <div class="tk-section-label">RASIC <span data-zh>模型</span><span data-en>Model</span></div>
+          <div class="tk-rasic">
+            <span class="tk-rasic-letter">R</span>
+            <span class="tk-rasic-text"><span data-zh>负责人: 风险管理团队/ESG团队</span><span data-en>Responsible: Risk Mgmt Team/ESG Team</span></span>
+            <span class="tk-rasic-letter">A</span>
+            <span class="tk-rasic-text"><span data-zh>批准人: 首席风险官</span><span data-en>Accountable: Chief Risk Officer</span></span>
+            <span class="tk-rasic-letter">S</span>
+            <span class="tk-rasic-text"><span data-zh>支持者: 财务/战略/运营部门</span><span data-en>Support: Finance/Strategy/Ops</span></span>
+            <span class="tk-rasic-letter">I</span>
+            <span class="tk-rasic-text"><span data-zh>知情者: 董事会/投资者</span><span data-en>Informed: Board/Investors</span></span>
+            <span class="tk-rasic-letter">C</span>
+            <span class="tk-rasic-text"><span data-zh>咨询者: 气候情景分析机构</span><span data-en>Consulted: Climate Scenario Analyst</span></span>
+          </div>
+          <div class="tk-section-label"><span data-zh>操作步骤</span><span data-en>Steps</span></div>
+          <ul class="tk-steps">
+            <li><span data-zh>治理架构搭建</span><span data-en>Establish governance structure</span></li>
+            <li><span data-zh>情景选择与分析</span><span data-en>Scenario selection & analysis</span></li>
+            <li><span data-zh>风险与机遇识别</span><span data-en>Risk & opportunity identification</span></li>
+            <li><span data-zh>财务影响量化</span><span data-en>Financial impact quantification</span></li>
+            <li><span data-zh>战略韧性评估</span><span data-en>Strategic resilience assessment</span></li>
+            <li><span data-zh>披露报告编制</span><span data-en>Prepare disclosure report</span></li>
+          </ul>
+          <div class="tk-section-label"><span data-zh>绩效指标</span><span data-en>KPIs</span></div>
+          <div class="tk-kpis">
+            <span class="tk-kpi-tag"><span data-zh>气候风险识别覆盖率 100%</span><span data-en>Climate risk identification 100%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>情景分析数量 ≥2种</span><span data-en>Scenario analysis ≥2 types</span></span>
+            <span class="tk-kpi-tag"><span data-zh>财务影响量化范围</span><span data-en>Financial impact quantification scope</span></span>
+            <span class="tk-kpi-tag"><span data-zh>TCFD 披露完整度</span><span data-en>TCFD disclosure completeness</span></span>
+          </div>
+        </div>
+      </div>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="dashboard">
+          <span><span data-zh>数据看板</span><span data-en>Data Dashboard</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="dashboard">
+          <div class="tk-section-label">RASIC <span data-zh>模型</span><span data-en>Model</span></div>
+          <div class="tk-rasic">
+            <span class="tk-rasic-letter">R</span>
+            <span class="tk-rasic-text"><span data-zh>负责人: 数据分析师/ESG数据经理</span><span data-en>Responsible: Data Analyst/ESG Data Manager</span></span>
+            <span class="tk-rasic-letter">A</span>
+            <span class="tk-rasic-text"><span data-zh>批准人: 数字化负责人</span><span data-en>Accountable: Digital Lead</span></span>
+            <span class="tk-rasic-letter">S</span>
+            <span class="tk-rasic-text"><span data-zh>支持者: IT/各业务部门</span><span data-en>Support: IT/Business Units</span></span>
+            <span class="tk-rasic-letter">I</span>
+            <span class="tk-rasic-text"><span data-zh>知情者: 管理层</span><span data-en>Informed: Management</span></span>
+            <span class="tk-rasic-letter">C</span>
+            <span class="tk-rasic-text"><span data-zh>咨询者: BI工具供应商</span><span data-en>Consulted: BI Tool Vendor</span></span>
+          </div>
+          <div class="tk-section-label"><span data-zh>操作步骤</span><span data-en>Steps</span></div>
+          <ul class="tk-steps">
+            <li><span data-zh>需求分析与指标体系定义</span><span data-en>Requirements & KPI definition</span></li>
+            <li><span data-zh>数据源接入与ETL</span><span data-en>Data source integration & ETL</span></li>
+            <li><span data-zh>数据建模与计算</span><span data-en>Data modeling & calculation</span></li>
+            <li><span data-zh>可视化设计</span><span data-en>Visualization design</span></li>
+            <li><span data-zh>权限管理与发布</span><span data-en>Access control & publish</span></li>
+            <li><span data-zh>培训与运营</span><span data-en>Training & operations</span></li>
+          </ul>
+          <div class="tk-section-label"><span data-zh>绩效指标</span><span data-en>KPIs</span></div>
+          <div class="tk-kpis">
+            <span class="tk-kpi-tag"><span data-zh>看板活跃使用率 ≥80%</span><span data-en>Dashboard active usage ≥80%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>数据刷新频率（日/周）</span><span data-en>Data refresh frequency (daily/weekly)</span></span>
+            <span class="tk-kpi-tag"><span data-zh>用户满意度 ≥85%</span><span data-en>User satisfaction ≥85%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>决策引用率</span><span data-en>Decision reference rate</span></span>
+          </div>
+        </div>
+      </div>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="lca">
+          <span><span data-zh>循环经济 LCA</span><span data-en>Circular Economy LCA</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="lca">
+          <div class="tk-section-label">RASIC <span data-zh>模型</span><span data-en>Model</span></div>
+          <div class="tk-rasic">
+            <span class="tk-rasic-letter">R</span>
+            <span class="tk-rasic-text"><span data-zh>负责人: LCA分析师/可持续产品经理</span><span data-en>Responsible: LCA Analyst/Sustainable PM</span></span>
+            <span class="tk-rasic-letter">A</span>
+            <span class="tk-rasic-text"><span data-zh>批准人: 研发/产品总监</span><span data-en>Accountable: R&D/Product Director</span></span>
+            <span class="tk-rasic-letter">S</span>
+            <span class="tk-rasic-text"><span data-zh>支持者: 供应链/生产部门</span><span data-en>Support: Supply Chain/Production</span></span>
+            <span class="tk-rasic-letter">I</span>
+            <span class="tk-rasic-text"><span data-zh>知情者: 市场部/品牌部</span><span data-en>Informed: Marketing/Brand</span></span>
+            <span class="tk-rasic-letter">C</span>
+            <span class="tk-rasic-text"><span data-zh>咨询者: LCA软件/咨询机构</span><span data-en>Consulted: LCA Software/Consultant</span></span>
+          </div>
+          <div class="tk-section-label"><span data-zh>操作步骤</span><span data-en>Steps</span></div>
+          <ul class="tk-steps">
+            <li><span data-zh>目标与范围定义</span><span data-en>Goal & scope definition</span></li>
+            <li><span data-zh>生命周期清单分析</span><span data-en>Life cycle inventory analysis</span></li>
+            <li><span data-zh>生命周期影响评估</span><span data-en>Life cycle impact assessment</span></li>
+            <li><span data-zh>结果解释与改善</span><span data-en>Interpretation & improvement</span></li>
+            <li><span data-zh>循环经济策略制定</span><span data-en>Circular economy strategy</span></li>
+            <li><span data-zh>跟踪与报告</span><span data-en>Monitoring & reporting</span></li>
+          </ul>
+          <div class="tk-section-label"><span data-zh>绩效指标</span><span data-en>KPIs</span></div>
+          <div class="tk-kpis">
+            <span class="tk-kpi-tag"><span data-zh>LCA模型完整度</span><span data-en>LCA model completeness</span></span>
+            <span class="tk-kpi-tag"><span data-zh>产品碳足迹降低率 ≥10%</span><span data-en>Product carbon footprint reduction ≥10%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>再生材料使用比例 ≥15%</span><span data-en>Recycled material ratio ≥15%</span></span>
+            <span class="tk-kpi-tag"><span data-zh>可回收设计覆盖率</span><span data-en>Design for recyclability coverage</span></span>
+          </div>
+        </div>
+      </div>
+              <div class="tk-item">
+        <div class="tk-item-header" data-item="downloads">
+          <span><span data-zh>📥 下载</span><span data-en>📥 Downloads</span></span>
+          <span class="tk-arrow">▼</span>
+        </div>
+        <div class="tk-item-body" data-body="downloads">
+          <div class="tk-section-label"><span data-zh>实用资源</span><span data-en>Resources</span></div>
+          <div class="tk-download-grid">
+            <a class="tk-dl-btn" href="javascript:void(0)" onclick="downloadResume()"><span>📄</span><span data-zh>最新简历</span><span data-en>Resume</span></a>
+            <a class="tk-dl-btn" href="#" target="_blank"><span>📊</span><span data-zh>ESG报告模板</span><span data-en>ESG Report Template</span></a>
+            <a class="tk-dl-btn" href="#" target="_blank"><span>📋</span><span data-zh>供应商审核清单</span><span data-en>Supplier Audit Checklist</span></a>
+            <a class="tk-dl-btn" href="#" target="_blank"><span>📈</span><span data-zh>碳排查计算表</span><span data-en>Carbon Calculator</span></a>
+            <a class="tk-dl-btn" href="#" target="_blank"><span>📑</span><span data-zh>TCFD报告框架</span><span data-en>TCFD Report Template</span></a>
+            <a class="tk-dl-btn" href="#" target="_blank"><span>🔄</span><span data-zh>LCA分析工具</span><span data-en>LCA Analysis Tool</span></a>
+          </div>
+          <div class="tk-text" style="margin-top:0.5rem;">
+            <span data-zh>持续更新中 · 更多工具即将上线</span>
+            <span data-en>Continuously updated · More tools coming soon</span>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Download & Contact -->
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <a href="javascript:void(0)" onclick="downloadResume()" onmouseover="this.style.borderColor='rgba(0,229,160,0.5)';this.style.background='linear-gradient(135deg,rgba(0,229,160,0.2),rgba(37,99,235,0.15))';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(0,229,160,0.25)';this.style.background='linear-gradient(135deg,rgba(0,229,160,0.12),rgba(37,99,235,0.08))';this.style.transform='none'" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.75rem 1.6rem;background:linear-gradient(135deg,rgba(0,229,160,0.12),rgba(37,99,235,0.08));border:1px solid rgba(0,229,160,0.25);border-radius:8px;color:var(--accent);font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;text-decoration:none;letter-spacing:0.04em;transition:all 0.25s;cursor:pointer;">
+        <span style="font-size:1.1rem;">📥</span>
+        <span><span data-zh>下载最新简历</span><span data-en>Download Resume</span></span>
+      </a>
+      <span style="font-size:0.7rem;color:var(--muted);"><span data-zh>PDF格式 · 更新于2026</span><span data-en>PDF · Updated 2026</span></span>
+      <div style="margin-left:auto;display:flex;gap:1.2rem;">
+        <span style="font-size:0.78rem;color:var(--muted);">📧 healerowl@163.com</span>
+        <span style="font-size:0.78rem;color:var(--muted);">📞 13050336380</span>
+        <span style="font-size:0.78rem;color:var(--muted);">📍 <span data-zh>深圳</span><span data-en>Shenzhen</span></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div style="margin-bottom:0.5rem;font-family:'Space Grotesk',sans-serif;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:0.1em;">LI HEXIN · ESG & SUPPLY CHAIN</div>
+  <div>healerowl@163.com &nbsp;·&nbsp; 13050336380 &nbsp;·&nbsp; <span data-zh>深圳</span><span data-en>Shenzhen</span></div>
+</footer>
+
+<script>
+
+// ============ PHOTO 3D TILT EFFECT ============
+(function(){
+  var container = document.getElementById('photo-container');
+  var frame = container ? container.querySelector('.photo-wrap') : null;
+  if(!frame) return;
+  
+  var rect = container.getBoundingClientRect();
+  var centerX = rect.left + rect.width/2;
+  var centerY = rect.top + rect.height/2;
+  var currentRotX = 0, currentRotY = 0;
+  var targetRotX = 0, targetRotY = 0;
+  var idleAngle = 0;
+  
+  document.getElementById('hero').addEventListener('mousemove', function(e){
+    var rect2 = container.getBoundingClientRect();
+    var cx = rect2.left + rect2.width/2;
+    var cy = rect2.top + rect2.height/2;
+    var dx = (e.clientX - cx) / (rect2.width/2);
+    var dy = (e.clientY - cy) / (rect2.height/2);
+    targetRotY = dx * 8;
+    targetRotX = -dy * 6;
+  });
+  
+  document.getElementById('hero').addEventListener('mouseleave', function(){
+    targetRotX = 0;
+    targetRotY = 0;
+  });
+  
+  function animateTilt(){
+    currentRotX += (targetRotX - currentRotX) * 0.06;
+    currentRotY += (targetRotY - currentRotY) * 0.06;
+    var t = Date.now() * 0.001;
+    // Subtle idle sway + floating breathe
+    idleAngle = Math.sin(t * 0.8) * 0.5;
+    var floatY = Math.sin(t * 0.6) * 4;
+    var breathe = Math.sin(t * 0.4) * 0.3;
+    frame.style.transform = 
+      'translateY(' + floatY + 'px) rotateX(' + (currentRotX + idleAngle + breathe) + 'deg) rotateY(' + currentRotY + 'deg)';
+    requestAnimationFrame(animateTilt);
+  }
+  animateTilt();
+})();
+
+// Flowing menu click - smooth scroll
+document.querySelectorAll('.menu-item').forEach(function(item){
+  item.addEventListener('click', function(){
+    var target = document.querySelector(this.getAttribute('data-target'));
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+  // ============ RADAR CHART ============
+  (function(){
+    var canvas = document.getElementById('radarChart');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height;
+    var cx = W/2, cy = H/2 - 5, radius = 155;
+    var levels = 5;
+    
+    var labelsEn = [
+      'Cross-dept Coord', 'Supplier Coord', 'Carbon S1-3',
+      'Quality Systems', 'Digital Tools', 'ESG Reporting',
+      'Materiality', 'Rating Engagement', 'TCFD Climate',
+      'Green Finance', 'LCA Analysis', 'Policy & Regs'
+    ];
+    var labelsZh = [
+      '跨部门协调', '供应商协调', '碳核算S1-3',
+      '质量体系', '数字化工具', 'ESG报告编制',
+      '实质性议题', '评级对接', 'TCFD气候风险',
+      '绿色金融', 'LCA分析', '政策法规'
+    ];
+    function getLabels(){
+      return document.body.classList.contains('en') ? labelsEn : labelsZh;
+    }
+    // User scores (realistic - strong in core, weak in some areas)
+    var userVals = [82, 88, 85, 90, 78, 80, 72, 62, 55, 42, 60, 48];
+    // Market average (consistent 48-62 range)
+    var marketVals = [58, 55, 50, 60, 56, 52, 50, 48, 55, 58, 48, 55];
+    
+    var N = 12;
+    var angles = [];
+    for(var i=0;i<N;i++){
+      angles.push((Math.PI*2/N)*i - Math.PI/2);
+    }
+
+    function drawGrid(){
+      // Concentric rings
+      for(var l=1;l<=levels;l++){
+        var r = radius*(l/levels);
+        ctx.beginPath();
+        for(var i=0;i<N;i++){
+          var x = cx + r*Math.cos(angles[i]);
+          var y = cy + r*Math.sin(angles[i]);
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      // Axis lines
+      for(var i=0;i<N;i++){
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.lineTo(cx + radius*Math.cos(angles[i]), cy + radius*Math.sin(angles[i]));
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+        ctx.stroke();
+      }
+      // Scale labels (20%, 40%, etc)
+      ctx.font = '8px "Space Grotesk",sans-serif';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      for(var l=1;l<=levels;l++){
+        var pct = Math.round(l/levels*100);
+        var tx = cx + 4;
+        var ty = cy - radius*(l/levels);
+        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+        ctx.fillText(pct+'%', tx, ty);
+      }
+    }
+
+    function drawLabels(){
+      var lbls = getLabels();
+      ctx.font = '9px "Space Grotesk",sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for(var i=0;i<N;i++){
+        var lx = cx + (radius+30)*Math.cos(angles[i]);
+        var ly = cy + (radius+30)*Math.sin(angles[i]);
+        ctx.fillStyle = 'rgba(232,238,248,0.55)';
+        ctx.fillText(lbls[i], lx, ly);
+      }
+    }
+
+    function drawPolygon(vals, progress, fillColor, strokeColor, lineWidth, dash){
+      ctx.beginPath();
+      for(var i=0;i<N;i++){
+        var v = vals[i]*progress;
+        var r = radius*(v/100);
+        var x = cx + r*Math.cos(angles[i]);
+        var y = cy + r*Math.sin(angles[i]);
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.closePath();
+      if(fillColor){
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+      }
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = lineWidth || 2;
+      if(dash) ctx.setLineDash(dash); else ctx.setLineDash([]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawPoints(vals, progress, color, showLabels){
+      for(var i=0;i<N;i++){
+        var v = vals[i]*progress;
+        var r = radius*(v/100);
+        var x = cx + r*Math.cos(angles[i]);
+        var y = cy + r*Math.sin(angles[i]);
+        ctx.beginPath();
+        ctx.arc(x,y,3,0,Math.PI*2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        if(showLabels){
+          ctx.font = '8px "Space Grotesk",sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = color;
+          ctx.fillText(Math.round(v)+'%', x, y-8);
+        }
+      }
+    }
+
+    var progress = 0;
+    function animate(){
+      progress += 0.025;
+      if(progress > 1) progress = 1;
+      ctx.clearRect(0,0,W,H);
+      drawGrid();
+      drawLabels();
+      // Market average first (dashed, lower opacity)
+      drawPolygon(marketVals, progress, 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.2)', 1.5, [5,5]);
+      drawPoints(marketVals, progress, 'rgba(255,255,255,0.2)', false);
+      // User scores (solid, highlighted)
+      var grad = ctx.createRadialGradient(cx,cy,0,cx,cy,radius);
+      grad.addColorStop(0,'rgba(0,229,160,0.12)');
+      grad.addColorStop(1,'rgba(37,99,235,0.04)');
+      drawPolygon(userVals, progress, grad, 'rgba(0,229,160,0.7)', 2.5);
+      drawPoints(userVals, progress, '#00E5A0', true);
+      
+      if(progress < 1) requestAnimationFrame(animate);
+    }
+    setTimeout(function(){ animate(); }, 500);
+    window.redrawRadar = function(){ progress = 0; animate(); };
+  })();
+
+// Stars
+
+(function(){
+  var g=document.getElementById('starsG');
+  if(!g)return;
+  var s='';
+  for(var i=0;i<180;i++){
+    var x=Math.random()*1440,y=Math.random()*500;
+    var r=Math.random()*1.2+0.2;
+    var op=Math.random()*0.7+0.15;
+    s+='<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="white" opacity="'+op+'"/>';
+  }
+  g.innerHTML=s;
+})();
+
+// Lang
+function setLang(l){
+  document.body.classList.toggle('en',l==='en');
+  document.querySelectorAll('.lang-btn button').forEach(function(b,i){
+    b.classList.toggle('active',(l==='zh'&&i===0)||(l==='en'&&i===1));
+  });
+  // Update scroll nav labels
+  document.querySelectorAll('.scroll-dot').forEach(function(d){
+    var zh = d.getAttribute('data-label-zh');
+    var en = d.getAttribute('data-label');
+    if(zh && en) d.setAttribute('data-label', l === 'zh' ? zh : en);
+  });
+  // Redraw radar chart with new language
+  if(window.redrawRadar) setTimeout(function(){ window.redrawRadar(); }, 100);
+}
+
+// Parallax
+var layers=[
+  {el:document.getElementById('layerSky'),speed:0.01},
+  {el:document.getElementById('layerStars'),speed:0.025},
+  {el:document.getElementById('layerHaze'),speed:0.02}
+];
+var heroEl2=document.getElementById('hero');
+var targetX=0,targetY=0,curX=0,curY=0;
+heroEl2.addEventListener('mousemove',function(e){
+  var r=heroEl2.getBoundingClientRect();
+  targetX=(e.clientX-r.left-r.width/2)/(r.width/2);
+  targetY=(e.clientY-r.top-r.height/2)/(r.height/2);
+});
+heroEl2.addEventListener('mouseleave',function(){targetX=0;targetY=0;});
+function animateLayers(){
+  curX+=(targetX-curX)*0.06;
+  curY+=(targetY-curY)*0.06;
+  layers.forEach(function(l){
+    if(l.el){
+      var tx=curX*l.speed*60;
+      var ty=curY*l.speed*40;
+      l.el.style.transform='translate('+tx+'px,'+ty+'px)';
+    }
+  });
+  requestAnimationFrame(animateLayers);
+}animateLayers();
+
+// ID CARD drag & spring
+var overlay=document.getElementById('overlay');
+var closeBtn=document.getElementById('closeBtn');
+var card=document.getElementById('idCard');
+var isDragging=false;
+var startX,startY,offX=0,offY=0,posX=0,posY=0;
+var velX=0,velY=0,animX=0,animY=0;
+var dragMode=false;
+
+function openCard(){
+  overlay.classList.add('active');
+  closeBtn.style.display='flex';
+  // Reset flip
+  document.getElementById('idCardBody').classList.remove('flipped');
+  // Drop animation
+  card.classList.remove('fly-up');
+  card.classList.add('dropping');
+  posX=0;posY=0;animX=0;animY=0;velX=0;velY=0;
+  card.style.transform='translate(0px,0px) rotate(0deg)';
+  setTimeout(function(){ card.classList.remove('dropping'); card.classList.add('idle'); }, 1000);
+}
+function closeCard(){
+  card.classList.add('fly-up');
+  setTimeout(function(){
+    overlay.classList.remove('active');
+    closeBtn.style.display='none';
+    card.classList.remove('fly-up');
+  }, 500);
+}
+
+card.addEventListener('mousedown',function(e){card.classList.remove('idle');
+  isDragging=true;dragMode=true;
+  startX=e.clientX-posX;startY=e.clientY-posY;
+  card.style.cursor='grabbing';
+  e.preventDefault();
+});
+document.addEventListener('mousemove',function(e){
+  if(!isDragging)return;
+  var newX=e.clientX-startX;
+  var newY=e.clientY-startY;
+  velX=(newX-posX)*0.5;velY=(newY-posY)*0.5;
+  posX=newX;posY=newY;
+  var rot=velX*0.15;
+  card.style.transform='translate('+posX+'px,'+posY+'px) rotate('+rot+'deg)';
+});
+document.addEventListener('mouseup',function(){
+  if(!isDragging)return;
+  isDragging=false;card.style.cursor='grab';
+  springBack();
+});
+card.addEventListener('touchstart',function(e){card.classList.remove('idle');
+  isDragging=true;
+  var t=e.touches[0];
+  startX=t.clientX-posX;startY=t.clientY-posY;
+  e.preventDefault();
+},{passive:false});
+document.addEventListener('touchmove',function(e){
+  if(!isDragging)return;
+  var t=e.touches[0];
+  var newX=t.clientX-startX;var newY=t.clientY-startY;
+  velX=(newX-posX)*0.5;velY=(newY-posY)*0.5;
+  posX=newX;posY=newY;
+  var rot=velX*0.12;
+  card.style.transform='translate('+posX+'px,'+posY+'px) rotate('+rot+'deg)';
+  e.preventDefault();
+},{passive:false});
+document.addEventListener('touchend',function(){
+  if(!isDragging)return;
+  isDragging=false;springBack();
+});
+
+function springBack(){
+  var stiffness=0.08,damping=0.72;
+  function tick(){
+    if(isDragging)return;
+    var ax=-stiffness*posX,ay=-stiffness*posY;
+    velX=(velX+ax)*damping;velY=(velY+ay)*damping;
+    posX+=velX;posY+=velY;
+    var rot=velX*0.1;
+    card.style.transform='translate('+posX+'px,'+posY+'px) rotate('+rot+'deg)';
+    if(Math.abs(posX)>0.3||Math.abs(posY)>0.3||Math.abs(velX)>0.1||Math.abs(velY)>0.1){
+      requestAnimationFrame(tick);
+    }else{
+      posX=0;posY=0;velX=0;velY=0;
+      card.style.transform='translate(0px,0px) rotate(0deg)';
+      card.classList.add('idle');
+    }
+  }tick();
+}
+
+overlay.querySelector('.overlay-bg').addEventListener('click',function(){
+  if(!dragMode)closeCard();
+  dragMode=false;
+});
+card.addEventListener('click',function(){dragMode=false;flipCard();});
+
+  // TOOLKIT ACCORDION
+  document.querySelectorAll('.tk-item-header').forEach(function(h){
+    h.addEventListener('click', function(){
+      document.querySelectorAll('.tk-item-body.open, .tk-item-header.active').forEach(function(e){
+        e.classList.remove('open','active');
+      });
+      this.nextElementSibling.classList.toggle('open');
+      this.classList.toggle('active');
+    });
+  });
+
+function downloadResume(){
+  var pwd = prompt('请输入密码 / Enter password to download:');
+  if(pwd === '20210'){
+    var a = document.createElement('a');
+    a.href = 'resume.pdf';
+    a.download = 'Li_Hexin_Resume.pdf';
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    alert('密码错误 / Incorrect password');
+  }
+}
+
+  // ============ INTERACTIVE HERO PARTICLES ============
+  (function(){
+    var canvas = document.getElementById('particleCanvas');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var hero = document.getElementById('hero');
+    var particles = [];
+    var mouse = {x:-2000, y:-2000};
+    var CONNECTION_DIST = 130, MOUSE_RADIUS = 160, PARTICLE_COUNT = 100;
+    
+    function resize(){
+      var rect = hero.getBoundingClientRect();
+      canvas.width = rect.width; canvas.height = rect.height;
+    }
+    window.addEventListener('resize', resize); resize();
+    
+    function init(){
+      particles = [];
+      for(var i=0;i<PARTICLE_COUNT;i++){
+        var r = Math.random()*2+0.6;
+        particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:(Math.random()-0.5)*0.25, vy:(Math.random()-0.5)*0.25, r:r, baseR:r, ba:Math.random()*0.3+0.1});
+      }
+    }
+    init();
+    
+    hero.addEventListener('mousemove', function(e){
+      var r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    hero.addEventListener('mouseleave', function(){ mouse.x = -2000; mouse.y = -2000; });
+    
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(var i=0;i<particles.length;i++){
+        var p = particles[i]; p.x += p.vx; p.y += p.vy;
+        if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
+        if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
+        var dx=mouse.x-p.x, dy=mouse.y-p.y, dist=Math.sqrt(dx*dx+dy*dy), glow=1;
+        if(dist<MOUSE_RADIUS){var f=1-dist/MOUSE_RADIUS; glow=1+f*3; p.r=p.baseR*(1+f*2);}
+        else p.r += (p.baseR-p.r)*0.05;
+        var op = Math.min(p.ba*glow, 0.9);
+        var grd = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*5);
+        grd.addColorStop(0,'rgba(0,229,160,'+(op*0.5)+')');
+        grd.addColorStop(1,'rgba(0,229,160,0)');
+        ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*5,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='rgba(232,238,248,'+op+')';
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      }
+      for(var i=0;i<particles.length;i++){
+        for(var j=i+1;j<particles.length;j++){
+          var a=particles[i],b=particles[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<CONNECTION_DIST){
+            var op=(1-dist/CONNECTION_DIST)*0.12;
+            var mdx=mouse.x-(a.x+b.x)/2, mdy=mouse.y-(a.y+b.y)/2;
+            var md=Math.sqrt(mdx*mdx+mdy*mdy);
+            if(md<MOUSE_RADIUS) op+=(1-md/MOUSE_RADIUS)*0.3;
+            if(op>0.5) op=0.5;
+            ctx.strokeStyle='rgba(0,229,160,'+op+')';
+            ctx.lineWidth=0.6; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+    var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); init(); },200); });
+  })();
+
+</script>
+
+<!-- ============ SCROLL NAVIGATION ============ -->
+<nav class="scroll-nav" id="scrollNav">
+  <a class="scroll-dot" href="#hero" data-label="Home" data-label-zh="首页"><span></span></a>
+  <a class="scroll-dot" href="#section-industry" data-label="Industry" data-label-zh="行业"><span></span></a>
+  <a class="scroll-dot" href="#section-esg" data-label="ESG Method" data-label-zh="ESG方法"><span></span></a>
+  <a class="scroll-dot" href="#section-frameworks" data-label="Standards" data-label-zh="标准"><span></span></a>
+  <a class="scroll-dot" href="#section-about" data-label="About" data-label-zh="关于我"><span></span></a>
+</nav>
+
+</body>
+</html>
